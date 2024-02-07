@@ -1,0 +1,47 @@
+# https://istio.io/latest/docs/ops/integrations/prometheus/
+apiVersion: skaffold/v4beta9
+kind: Config
+metadata:
+  name: prometheus
+# requires:
+#   - configs: [istiod]
+deploy:
+  helm:
+    releases:
+      - name: prometheus
+        remoteChart: prometheus
+        repo: https://prometheus-community.github.io/helm-charts
+        namespace: prometheus
+        createNamespace: true
+        valuesFiles:
+          - ./istio/values/values-prometheus.yaml
+---
+apiVersion: skaffold/v4beta9
+kind: Config
+metadata:
+  name: kiali-operator
+requires:
+  - configs: [prometheus]
+deploy:
+  helm:
+    releases:
+      - name: kiali-operator
+        remoteChart: kiali-operator
+        repo: https://kiali.org/helm-charts
+        namespace: kiali-operator
+        createNamespace: true
+---
+apiVersion: skaffold/v4beta9
+kind: Config
+metadata:
+  name: kiali
+requires:
+  - configs: [kiali-operator]
+manifests:
+  rawYaml:
+    - kiali-dashboard.yaml
+deploy:
+  kubectl: 
+    flags:
+      delete: 
+        - "--wait=true"

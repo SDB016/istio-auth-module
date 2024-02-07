@@ -1,0 +1,45 @@
+apiVersion: skaffold/v4beta9
+kind: Config
+metadata:
+  name: istio-base
+deploy:
+  helm:
+    releases:
+      - name: istio-base
+        recreatePods: true
+        # skipBuildDependencies: false
+        # skipTests: false
+        # useHelmSecrets: false
+        # wait: false
+        remoteChart: base
+        repo: https://istio-release.storage.googleapis.com/charts
+        namespace: istio-system
+        createNamespace: true
+---
+apiVersion: skaffold/v4beta9
+kind: Config
+metadata:
+  name: istiod
+requires:
+  - configs: [istio-base]
+deploy:
+  helm:
+    releases:
+      - name: istiod
+        remoteChart: istiod
+        repo: https://istio-release.storage.googleapis.com/charts
+        namespace: istio-system
+---
+apiVersion: skaffold/v4beta9
+kind: Config
+metadata:
+  name: istio-ingressgateway
+requires:
+  - configs: [istiod]
+deploy:
+  helm:
+    releases:
+      - name: istio-ingressgateway
+        remoteChart: gateway
+        repo: https://istio-release.storage.googleapis.com/charts
+        namespace: istio-system
