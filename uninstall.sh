@@ -5,5 +5,6 @@ kubectl delete -f kiali-dashboard.yaml
 kubectl wait --for=delete svc/kiali -n istio-system
 kubectl wait --for=delete deployment/kiali -n istio-system
 
+skaffold delete -f auth-config-skaffold.yaml
 skaffold delete -f monitoring-skaffold.yaml
 skaffold delete

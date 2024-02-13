@@ -29,6 +29,8 @@ deploy:
         remoteChart: istiod
         repo: https://istio-release.storage.googleapis.com/charts
         namespace: istio-system
+        valuesFiles:
+          - istiod-values.yaml
 ---
 apiVersion: skaffold/v4beta9
 kind: Config
@@ -43,3 +45,4 @@ deploy:
         remoteChart: gateway
         repo: https://istio-release.storage.googleapis.com/charts
         namespace: istio-system
+        
