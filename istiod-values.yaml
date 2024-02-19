@@ -1,4 +1,0 @@
-meshConfig:
-  accessLogFile: "/dev/stdout"
-  accessLogEncoding: 'TEXT'
-  enablePrometheusMerge: true

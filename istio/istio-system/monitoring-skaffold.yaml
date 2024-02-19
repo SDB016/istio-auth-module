@@ -14,7 +14,7 @@ deploy:
         namespace: prometheus
         createNamespace: true
         valuesFiles:
-          - ./istio/values/values-prometheus.yaml
+          - istio/istio-system/values/prometheus-values.yaml
 ---
 apiVersion: skaffold/v4beta9
 kind: Config
@@ -39,7 +39,7 @@ requires:
   - configs: [kiali-operator]
 manifests:
   rawYaml:
-    - kiali-dashboard.yaml
+    - istio/istio-system/manifests/kiali-dashboard.yaml
 deploy:
   kubectl: 
     flags:

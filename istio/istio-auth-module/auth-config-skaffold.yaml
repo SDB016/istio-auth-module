@@ -6,7 +6,7 @@ deploy:
   helm:
     releases:
       - name: auth-config
-        chartPath: istio-auth-module
+        chartPath: istio/istio-auth-module
         namespace: istio-system
       
         

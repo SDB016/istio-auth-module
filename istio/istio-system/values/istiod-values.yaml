@@ -1,0 +1,23 @@
+meshConfig:
+  accessLogFile: "/dev/stdout"
+  accessLogEncoding: 'TEXT'
+  enablePrometheusMerge: true
+  accessLogFormat: |
+    ----- Request Information -----
+    [%START_TIME%] 
+    Method: %REQ(:METHOD)% 
+    Path: %REQ(X-ENVOY-ORIGINAL-PATH?:PATH)% 
+    Protocol: %PROTOCOL% 
+    ForwardedFor: %REQ(X-FORWARDED-FOR)% 
+    UserAgent: %REQ(USER-AGENT)% 
+    RequestID: %REQ(X-REQUEST-ID)% 
+    Authority: %REQ(:AUTHORITY)% 
+    Authorization: %REQ(Authorization)% 
+    JwtClaim: %REQ(x-jwt-claim)%
+    ----- Response Information -----
+    ResponseCode: %RESPONSE_CODE% 
+    ResponseFlags: %RESPONSE_FLAGS% 
+    Duration: %DURATION% 
+    UpstreamServiceTime: %RESP(X-ENVOY-UPSTREAM-SERVICE-TIME)% 
+    UpstreamHost: %UPSTREAM_HOST%
+
